@@ -1,0 +1,40 @@
+---
+- name: update db nodes
+  hosts: web:!swf
+  any_errors_fatal: true
+  serial: 1
+  tasks:
+  
+  - name: save our start time
+    set_fact:
+      start_time: "{{ lookup('pipe','date') }}"
+
+  - name: do some batch processing on those dbs
+    shell: 'sleep 3'
+
+  - name: save our finish time
+    set_fact:
+      finish_time: "{{ lookup('pipe','date') }}"
+
+#    slack:
+#      token: thetoken/generatedby/slack
+  - name: Send notification message via Slack
+    debug:  
+      msg: '{{ inventory_hostname }} started {{start_time}} finished {{finish_time}}'
+    delegate_to: localhost
+
+  # Post an event to datadog
+#  - datadog_event:
+#      title: nightly_db
+#      text: '{{ inventory_hostname }} started {{start_time}} finished {{finish_time}}'
+#      priority: low
+#      api_key: xxxxxxxxxxxx
+#      app_key: xxxxxxxxxxx
+
+  - name: write to local syslog
+    syslogger:
+      msg: "completed database updates on {{ inventory_hostname }}"
+      priority: "err"
+      facility: "daemon"
+      log_pid: true
+    delegate_to: localhost
