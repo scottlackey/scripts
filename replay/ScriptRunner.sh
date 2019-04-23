@@ -75,9 +75,9 @@ do
   if [ -z "${script// }" ]; then
      continue
   fi
-  #log_out=log_out_thread_${2}_$1_$logdate
+  log_out=log_out_thread_${2}_$1_$logdate
   # if you want to send result-set to /dev/null
-  log_out=/dev/null
+  #log_out=/dev/null
   log_status=log_status_tread_${2}
   # Uses the same DB os the original file
   db=`basename $script | cut -d '-' -f 1`
