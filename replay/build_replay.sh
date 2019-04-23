@@ -16,6 +16,7 @@ for i in $(ls 0483*); do rm -rf $i; done
 sed -i 's/clicktripz-read-only/\"clicktripz-read-only\"/g' *
 sed -i 's/domo-unload/\"domo-unload\"/g' *
 sed -i 's/lambda-loader/\"lambda-loader\"/g' *
+sed -i "s/IAM_ROLE.*$/IAM_ROLE \'arn:aws:iam::048300154415:role\/RedshiftProdCopy\'/g" *
 #create file with sql filenames and then order it
 ls *.sql > files
 ../order_list.sh files > ordered
