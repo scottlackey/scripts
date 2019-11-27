@@ -995,20 +995,19 @@ CREATE TABLE `settings` (
 --
 -- Dumping data for table `settings`
 --
-
-LOCK TABLES `settings` WRITE;
+/* LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'database_version','183'),(2,'installation_name','TestRail QA'),(3,'installation_url','https://testrail-staging.clicktripz.io/testrail/'),(4,'attachment_dir',NULL),(5,'report_dir',NULL),(6,'default_language','en'),(7,'default_locale','en-us'),(8,'default_timezone',NULL),(9,'email_server',NULL),(10,'email_ssl',NULL),(11,'email_from',NULL),(12,'email_user','scott@clicktripz.com'),(13,'email_pass','password'),(14,'email_notifications',NULL),(15,'license_key','eTUueaaVNpmaoO6W0BbzO39Rh5kHNMy++sSsv+cg8mNqwndcNmlug25ApI7X
+/* INSERT INTO `settings` VALUES (1,'database_version','183'),(2,'installation_name','TestRail QA'),(3,'installation_url','https://testrail-staging.clicktripz.io/testrail/'),(4,'attachment_dir',NULL),(5,'report_dir',NULL),(6,'default_language','en'),(7,'default_locale','en-us'),(8,'default_timezone',NULL),(9,'email_server',NULL),(10,'email_ssl',NULL),(11,'email_from',NULL),(12,'email_user','scott@clicktripz.com'),(13,'email_pass','password'),(14,'email_notifications',NULL),(15,'license_key','eTUueaaVNpmaoO6W0BbzO39Rh5kHNMy++sSsv+cg8mNqwndcNmlug25ApI7X
 Cih7tZGJ7U3LQyQ8qayreuZBqWjVQ/GQZjxJuCg7BOzR9uaKhm47w+M/Usn6
 dhLhjGY0ccC4aaLCZsNs1DPWUyDnJZ+69hyqVvrHZwjHeyB14iKkM9GbhPD+
 vixemOYK/wSQKqjPVCJTcSKlS1PMsOOD78hCmoJ2ujCXrpkh7KH6qYlp/yrX
 f+2nLxPNnU1uqBhPJqqw6yjKL3oDGDw/sZXALNRTeDtMdzOw4NxKvDHh3KU=');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
-UNLOCK TABLES;
-
+/* UNLOCK TABLES;
 --
 -- Table structure for table `statuses`
 --
+*/
 
 DROP TABLE IF EXISTS `statuses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+token=$(curl -sX POST -d "grant_type=password&username=admin&password=OfP95C9n6keB&scope=write" -u "ZjbHFv9Sb3g3wBPlrvdsaG9FUejmaW3gnBolM22q:uIdR9dDw0iGNuyuka3erS6G9yD02RZh9QsJrQfRSYqcHTRcFH6CqfpYGv7xCV9Iqk5hUE0wnp9EEgePXZg7F4nQHbAvXLXQ55T4aD8Bo876KuxDVTuMt2swadZ09gH9N" https://tower.clicktripz.com/api/o/token/ -i | grep token | cut -d ' ' -f 2 | sed s/\"//g | sed s/\,//g)
+
+curl -H "Authorization: Bearer $token" -X POST https://tower.clicktripz.com/api/v2/job_templates/20/launch/
+
