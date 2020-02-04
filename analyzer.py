@@ -24,30 +24,29 @@ for filename in os.listdir(path):
 def pageviews(d):
   matched = {}
   uniques = 0
+  top_users = 5
   for dic in d:
     if dic['uid'] in matched:
       matched[dic['uid']] += 1
     else:
       matched[dic['uid']] = 1
       uniques += 1
-  print("Total unique users:",  uniques )
-  print("Top users:")
-  print( "UserID  Pageviews")
-
   pv = sorted(matched.items(), key=operator.itemgetter(1))
   i = 0
   j = 1
-  while i < 5:
-    print(' '.join(map(str, pv[len(pv) - j]))) 
+  top = []
+  while i < top_users:
+    top.append(' '.join(map(str, pv[len(pv) - j])))
     j += 1
     i += 1
+  return uniques, top
 
-def sessions(d):
+def sessions(d, user):
   sess = timedelta(seconds=0)
   pt = 0
   session_counter = 0
   for dic in d:
-    if (dic['uid'] == '489f3e87'):
+    if (dic['uid'] == '43a81873'):
       rawdate = dic['date']
       if (pt == 0):
         pt = datetime.strptime(rawdate,"%d/%b/%Y:%H:%M:%S")
@@ -56,17 +55,32 @@ def sessions(d):
         pt = ct
         ct = datetime.strptime(rawdate,"%d/%b/%Y:%H:%M:%S")
         dt = ct - pt
-#        print(dt.total_seconds())
+#        print("current time", ct)
+#        print("minus")
+#        print("previous time", pt)
+#        print("equals")
+#        print("dt total_Seconds", dt.total_seconds())
         if (dt.total_seconds() <= 600):
           sess += dt
         else:
+          sess += dt
           print ("############# Session ###############")
-          print(sess.total_seconds())
-          sess = timedelta(seconds=0)
+          print("session in seconds", sess.total_seconds())
+          total_sess = sess.total_seconds() / 60.0
           session_counter += 1
-  print(sess / timedelta(minutes=1))
+          print("session in minutes", round(total_sess,2)) 
   print ("sessions", session_counter + 1)
 
-pageviews(d)
-sessions(d)
+uniques, top = pageviews(d)
+print("Total unique users:",  uniques )
+print("Top users:")
+print( "UserID  Pageviews")
+for each in top:
+  print(each)
+#for each in top:
+#  each = each.split()
+#  print(each[0])
+#  sessions(d, each[0])
+sessions(d, 'user')
+
 
