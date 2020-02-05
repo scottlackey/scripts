@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3
-#livongo coding example
+#livongo coding example Scott Lackey scottlackey@gmail.com
 import os, operator
 from datetime import datetime, timedelta
 path = "logs/"
@@ -45,8 +45,9 @@ def sessions(d, user):
   sess = timedelta(seconds=0)
   pt = 0
   session_counter = 0
+  session_list = []
   for dic in d:
-    if (dic['uid'] == '43a81873'):
+    if (dic['uid'] == user):
       rawdate = dic['date']
       if (pt == 0):
         pt = datetime.strptime(rawdate,"%d/%b/%Y:%H:%M:%S")
@@ -55,32 +56,26 @@ def sessions(d, user):
         pt = ct
         ct = datetime.strptime(rawdate,"%d/%b/%Y:%H:%M:%S")
         dt = ct - pt
-#        print("current time", ct)
-#        print("minus")
-#        print("previous time", pt)
-#        print("equals")
-#        print("dt total_Seconds", dt.total_seconds())
         if (dt.total_seconds() <= 600):
           sess += dt
         else:
-          sess += dt
-          print ("############# Session ###############")
-          print("session in seconds", sess.total_seconds())
           total_sess = sess.total_seconds() / 60.0
           session_counter += 1
-          print("session in minutes", round(total_sess,2)) 
-  print ("sessions", session_counter + 1)
+#          print("session in minutes", round(total_sess,2)) 
+          session_list.append(round(total_sess,2))
+          sess += dt
+  #final session, or one that never had a 10 minute delta
+  total_sess = sess.total_seconds() / 60.0
+  session_list.append(round(total_sess,2))
+  session_counter += 1
+  session_list.sort()
+  return session_counter, session_list
 
 uniques, top = pageviews(d)
 print("Total unique users:",  uniques )
 print("Top users:")
-print( "UserID  Pageviews")
+print( "id       #pages #sess longest shortest")
 for each in top:
-  print(each)
-#for each in top:
-#  each = each.split()
-#  print(each[0])
-#  sessions(d, each[0])
-sessions(d, 'user')
-
-
+  each = each.split()
+  session_count, session_list = sessions(d, each[0])
+  print(each[0], each[1], '  ', session_count, '  ', session_list[len(session_list) -1], ' ', session_list[0])
