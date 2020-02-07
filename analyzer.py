@@ -1,25 +1,27 @@
 #!/usr/local/bin/python3
 #livongo coding example Scott Lackey scottlackey@gmail.com
-import os, operator
+import os, operator, sys
 from datetime import datetime, timedelta
-path = "logs/"
+path = sys.argv[1] 
 
-d = []
-c = 0
-keys = ['uid','ip', 'date', 'timezone', 'op', 'uri', 'pro', 'statuscode']
-for filename in os.listdir(path):
-  with open(os.path.join(path, filename),'r') as f:
-    for line in f:
-      #split ws
-      l = line.split()
-      l.remove('-')
-      l.remove('-')
-      uri_string = l[4].split('/')
-      if (len(uri_string) >= 4):
-      #if no uid, don't add it to the dict.
-        uid = uri_string[3]
-        l.insert(0,uid) 
-        d.append(dict(zip(keys, l)))
+def readlogs():
+  d = []
+  c = 0
+  keys = ['uid','ip', 'date', 'timezone', 'op', 'uri', 'pro', 'statuscode']
+  for filename in os.listdir(path):
+    with open(os.path.join(path, filename),'r') as f:
+      for line in f:
+        #split ws
+        l = line.split()
+        l.remove('-')
+        l.remove('-')
+        uri_string = l[4].split('/')
+        if (len(uri_string) >= 4):
+        #if no uid, don't add it to the dict.
+          uid = uri_string[3]
+          l.insert(0,uid) 
+          d.append(dict(zip(keys, l)))
+  return d
 
 def pageviews(d):
   matched = {}
@@ -71,6 +73,8 @@ def sessions(d, user):
   session_list.sort()
   return session_counter, session_list
 
+#main function block
+d = readlogs()
 uniques, top = pageviews(d)
 print("Total unique users:",  uniques )
 print("Top users:")
